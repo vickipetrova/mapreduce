@@ -11,7 +11,9 @@ def main():
     num_reducer_processes = 3
 
     # Define the data directories
-    data = ["app/data_dir1", "app/data_dir2", "app/data_dir3", "app/data_dir4", "app/data_dir5"]
+    # data = ["app/data_dir1", "app/data_dir2", "app/data_dir3", "app/data_dir4", "app/data_dir5"]
+    # Oscar Wilde The Portrait of Dorian Gray
+    data = ["app/oscar_wilde_data/chapters1_4", "app/oscar_wilde_data/chapters5_8", "app/oscar_wilde_data/chapters9_12", "app/oscar_wilde_data/chapters13_16", "app/oscar_wilde_data/chapters17_20"]
 
     # Create a queue associated with each reducer 
     reducer_queues = [multiprocessing.Queue() for _ in range(num_reducer_processes)]
@@ -28,22 +30,17 @@ def main():
     print("Waiting for 4 seconds...")
     time.sleep(4)
     print("Done waiting!")
-    time.sleep(2)
+    time.sleep(1)
 
     # Create and start mapper processes
-    print("Create mappers")
-    time.sleep(2)
+    print("Create mappers and start mapper proccesses")
+    time.sleep(4)
     mapper_processes = []
     for i in range(num_mapper_processes):
         data_directory = data[i % len(data)]
         mapper = Mapper(reducer_queues, data_directory)
         map_process = multiprocessing.Process(target=mapper.map)
         mapper_processes.append(map_process)
-    
-    print("Waiting for 4 seconds...")
-    print("Starting mapper proccesses")
-    time.sleep(4)
-    for map_process in mapper_processes:
         map_process.start()
 
     # Wait for mapper processes to finish

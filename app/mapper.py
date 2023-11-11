@@ -31,7 +31,7 @@ class Mapper:
     def map(self):
         print("🗺️ MAP operation initialized")
         # Used to remove punctuation
-        translator = str.maketrans("", "", string.punctuation)
+        translator = str.maketrans("", "", string.punctuation + '“”’‘')
 
         # Read files from the specified data directory
         for filename in os.listdir(self.data_directory):
@@ -46,16 +46,25 @@ class Mapper:
                     line = line.translate(translator)
                     words = line.split()
 
+                    # Count words per line
+                    temp_line_counts = {}
                     for word in words:
+                        if word.lower() in temp_line_counts:
+                            temp_line_counts[word.lower()] += 1
+                        else:
+                            temp_line_counts[word.lower()] = 1
+
+                    # Send results from line to target reducer
+                    for word in temp_line_counts.keys():
                         # Hash the word to determine the reducer
                         reducer_id = self.hash_word(word)
                         
                         # Send the output to the corresponding reducer queue
-                        self.output_queues[reducer_id].put((word, 1))
+                        self.output_queues[reducer_id].put((word, temp_line_counts[word]))
             
         # Send EOF message to each reducer's queue
         for queue in self.output_queues:
-            queue.put(("EOF", None))
+            queue.put(("EOF", "EOF"))
         
         print("🗺️❌ Mapper is done: EOF message")
 

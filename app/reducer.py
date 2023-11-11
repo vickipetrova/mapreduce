@@ -47,12 +47,13 @@ class Reducer:
             key, value = mapper_output[0], mapper_output[1]
 
             # Keep waiting for mapper output
-            if key is None and value is None: 
+            if key is None or value is None: 
                 print("⏩️ Reducer #{} waiting for mapper".format(self.reducer_id))
                 continue
             
+            print("⏩️ Reducer #{} got input key:{}, value:{}".format(self.reducer_id, key, value))
             # Keep track if the Mappers terminated
-            if key == "EOF" and value is None: 
+            if key == "EOF" and value == "EOF": 
                 self.num_map_processes = self.num_map_processes - 1
             elif key in self.word_storage:
                 self.word_storage[key] += value
