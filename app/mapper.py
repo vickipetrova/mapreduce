@@ -19,7 +19,7 @@ class Mapper:
         Reads each file from a file directory. Each file is read line by line (not all at once) and 
         a stream of mapped key-count pairs are sent to the target reducer
     hash_word:
-
+        Determines the target reducer based on the hash of the word 
     """
 
     def __init__ (self, output_queues, data_directory):
@@ -58,6 +58,9 @@ class Mapper:
     def hash_word(self, word):
         """
         Non-cryptographic hash function with modulo
+
+        Each time the mapper processes something to reduce, it must (non-cryptographically) hash it 
+        and identify which reducer the data must be sent to.
         
         The hashlib library ensures a consistend and predictable hashing.
         1) First, the word is hashed using M5 hashing algorithm and turned to bytes. 
