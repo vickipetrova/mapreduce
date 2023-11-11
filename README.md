@@ -1,2 +1,8 @@
 # mapreduce
-Simple DIY map reduce program in Python
+A simple DIY map reduce program in Python that I implemented for my Distributed Systems class
+
+# Lessons and Technologies
+* Python
+* Hashing
+* Parallel Programming
+* MapReduce
