@@ -51,7 +51,7 @@ class Reducer:
                 print("⏩️ Reducer #{} waiting for mapper".format(self.reducer_id))
                 continue
             
-            print("⏩️ Reducer #{} got input key:{}, value:{}".format(self.reducer_id, key, value))
+            # print("⏩️ Reducer #{} got input key:{}, value:{}".format(self.reducer_id, key, value))
             # Keep track if the Mappers terminated
             if key == "EOF" and value == "EOF": 
                 self.num_map_processes = self.num_map_processes - 1

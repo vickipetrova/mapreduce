@@ -3,6 +3,7 @@ from app.reducer import Reducer
 
 import multiprocessing
 import time
+import random
 
 def main():
 
@@ -42,6 +43,19 @@ def main():
         map_process = multiprocessing.Process(target=mapper.map)
         mapper_processes.append(map_process)
         map_process.start()
+        ###
+        # # Simulate a random process dying
+        # if random.random() < 0.2: 
+        #     print("Kill reducer process number", i)
+        #     map_process.terminate()
+        #     map_process.join()
+        # # Simulate a random process dying
+        # if random.random() < 0.2: 
+        #     print("Kill reducer process number", len(reducer_processes)-1)
+        #     reducer_processes[len(reducer_processes)-1].terminate()
+        #     reducer_processes[len(reducer_processes)-1].join()
+        ###
+
 
     # Wait for mapper processes to finish
     for process in mapper_processes:
