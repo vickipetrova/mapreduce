@@ -36,7 +36,7 @@ def main():
     mapper_processes = []
     for i in range(num_mapper_processes):
         data_directory = data[i % len(data)]
-        mapper = Mapper(reducer_queues, num_reducer_processes, data_directory)
+        mapper = Mapper(reducer_queues, data_directory)
         map_process = multiprocessing.Process(target=mapper.map)
         mapper_processes.append(map_process)
     

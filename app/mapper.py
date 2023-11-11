@@ -1,5 +1,6 @@
 import os
 import hashlib
+import string
 
 class Mapper:
     """ 
@@ -29,6 +30,8 @@ class Mapper:
 
     def map(self):
         print("🗺️ MAP operation initialized")
+        # Used to remove punctuation
+        translator = str.maketrans("", "", string.punctuation)
 
         # Read files from the specified data directory
         for filename in os.listdir(self.data_directory):
@@ -40,6 +43,7 @@ class Mapper:
                 for line in file:
                     # Clean data and split line into words
                     line = line.strip()
+                    line = line.translate(translator)
                     words = line.split()
 
                     for word in words:
